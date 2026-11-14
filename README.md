@@ -16,6 +16,9 @@ lingua, conversazione, percorso a fermate e foglio da portare allo sportello.
   Lo stato resta nella memoria del browser e sparisce ricaricando la pagina.
 - Le traduzioni dell'interfaccia in it, en, ro, ar, uk, fil e bn sono state scritte per la demo e vanno
   riviste da madrelingua.
+- La scheda **Documenti** è un **mockup concettuale** con documenti inventati: archivio, dettaglio di un documento
+  e collegamento tra documenti e passi del percorso. Non carica file, non salva nulla, non riconosce documenti e non
+  ha un backend: ogni schermata lo dichiara («Mockup concettuale · Dati di esempio»). Non è una funzione del sito vero.
 - Altre **82 lingue** (89 in tutto, come il sito vero) sono selezionabili, ma sono traduzioni **automatiche e
   parziali**: hanno solo i 14 testi che coincidono con quelli del sito (domanda sulla lingua, «Avanti», «Fine»,
   microfono, conversazione, titolo del foglio…); il resto, compresi i contenuti di esempio, resta in inglese.

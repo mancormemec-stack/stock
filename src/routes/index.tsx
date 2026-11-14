@@ -8,6 +8,7 @@ import { ConversationSheet } from "@/components/primo/ConversationSheet";
 import { JourneyScreen } from "@/components/primo/JourneyScreen";
 import { SheetTicket } from "@/components/primo/SheetTicket";
 import { MeScreen } from "@/components/primo/MeScreen";
+import { DocumentsScreen } from "@/components/primo/DocumentsScreen";
 import { Onboarding, type OnboardingResult } from "@/components/primo/Onboarding";
 import { DemoPanel, type DemoAction } from "@/components/primo/DemoPanel";
 import { LANGUAGES, type ChatItem, type LineId, type MicState } from "@/components/primo/types";
@@ -122,7 +123,7 @@ function App() {
     if (a === "language") return openOnboarding(1);
     if (a === "intro") return openOnboarding(2);
     setOnboarding(false); setMenuOpen(false);
-    if (a === "percorso" || a === "foglio" || a === "io") { setChatOpen(false); setSession(false); setMicState("idle"); return goTab(a); }
+    if (a === "percorso" || a === "foglio" || a === "documenti" || a === "io") { setChatOpen(false); setSession(false); setMicState("idle"); return goTab(a); }
     goTab("parla"); setAskStage("done"); setMicState(a); setSession(a !== "idle");
   };
   const demoCurrent: DemoAction = onboarding ? (["welcome", "language", "intro"] as const)[onbStep] ?? "welcome" : tab === "parla" ? micState : tab;
@@ -138,6 +139,7 @@ function App() {
         onAnswerEu={(v) => { setProfile((pr) => ({ language: lang, firstName: "", ...pr, isEuCitizen: v })); setAskStage("done"); }} />;
       case "percorso": return <JourneyScreen lines={lines} onToggleStop={onToggleStop} initialLine={journeyLine} onOpenSheet={() => goTab("foglio")} onOpenProfile={() => goTab("io")} />;
       case "foglio": return <SheetTicket line={lines[0] ?? SAMPLE_LINES[0]!} documents={SAMPLE_DOCUMENTS} sources={SAMPLE_SOURCES} onShare={onShare} />;
+      case "documenti": return <DocumentsScreen onOpenPath={(l) => { setJourneyLine(l); goTab("percorso"); }} />;
       case "io": return <MeScreen language={lang} theme={theme} onLanguageChange={setLang} onToggleTheme={toggleTheme} onRestart={() => openOnboarding(0)} />;
     }
   })();
@@ -157,7 +159,7 @@ function App() {
                 {tab === "io" && <ScreenHeader title={t("title.profilo")} compact={compact} />}
                 {tab === "foglio" && <ScreenHeader title={t("title.foglio")} compact={compact} onBack={() => goTab("percorso")} backLabel={t("onb.back")} />}
                 <main id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`}
-                  key={tab} className={`${dirAnim === "next" ? "slide-next" : "slide-prev"} ${tab === "parla" ? "h-full" : tab === "percorso" ? "" : "pt-1"}`}>
+                  key={tab} className={`${dirAnim === "next" ? "slide-next" : "slide-prev"} ${tab === "parla" ? "h-full" : tab === "percorso" || tab === "documenti" ? "" : "pt-1"}`}>
                   {screen}
                 </main>
               </div>

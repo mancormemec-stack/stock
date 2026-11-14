@@ -61,6 +61,7 @@ const it = {
   "onb.next": "Avanti", "onb.back": "Indietro", "onb.skip": "Salta", "onb.start": "Iniziamo", "onb.nameLabel": "Il tuo nome (facoltativo)",
   "onb.nameNote": "Serve solo per salutarti. Resta sul tuo telefono e non viene salvato né inviato.",
   "onb.yes": "Sì", "onb.no": "No", "onb.noSay": "Preferisco non dirlo", "onb.euNote": "Le regole sono diverse: così ti indico il percorso giusto.",
+  "tab.docs": "Documenti", "docs.title": "I tuoi documenti", "docs.sub": "Tutto quello che ti serve, in un unico posto", "docs.concept": "Mockup concettuale", "docs.summary": "{done} di {total} pronti", "docs.ready": "Pronti", "docs.missing": "Da aggiungere", "docs.statusAdded": "Caricato · Esempio", "docs.add": "Aggiungi documento", "docs.addNote": "Nella demo non si caricano file.", "docs.pino": "Pino ti avvisa", "docs.pinoMsg": "Ti manca la dichiarazione di effettiva dimora per il prossimo passaggio del tuo percorso.", "docs.viewList": "Elenco", "docs.viewPath": "Per percorso", "docs.detail": "Dettaglio documento", "docs.usedIn": "Serve per questi passaggi", "docs.status": "Stato", "docs.expiry": "Scadenza", "docs.expiryNone": "Non indicata (dato di esempio)", "docs.facsimile": "Facsimile", "docs.openPath": "Vedi nel percorso", "docs.pathCount": "{done} di {total} documenti pronti", "doc.5": "Contratto d'affitto", "doc.6": "Marca da bollo", "doc.7": "4 fototessere", "docs.open": "Apri {name}",
 };
 export type Key = keyof typeof it;
 
@@ -120,6 +121,7 @@ const en: Record<Key, string> = {
   "onb.next": "Next", "onb.back": "Back", "onb.skip": "Skip", "onb.start": "Let's start", "onb.nameLabel": "Your name (optional)",
   "onb.nameNote": "Only used to greet you. It stays on your phone and is not saved or sent.",
   "onb.yes": "Yes", "onb.no": "No", "onb.noSay": "I prefer not to say", "onb.euNote": "The rules are different: this helps me show you the right path.",
+  "tab.docs": "Documents", "docs.title": "Your documents", "docs.sub": "Everything you need, in one place", "docs.concept": "Conceptual mockup", "docs.summary": "{done} of {total} ready", "docs.ready": "Ready", "docs.missing": "To add", "docs.statusAdded": "Uploaded · Example", "docs.add": "Add document", "docs.addNote": "Files are not uploaded in the demo.", "docs.pino": "Pino lets you know", "docs.pinoMsg": "You are missing the declaration of actual address for the next step of your path.", "docs.viewList": "List", "docs.viewPath": "By path", "docs.detail": "Document details", "docs.usedIn": "Needed for these steps", "docs.status": "Status", "docs.expiry": "Expiry", "docs.expiryNone": "Not shown (sample data)", "docs.facsimile": "Specimen", "docs.openPath": "See in the path", "docs.pathCount": "{done} of {total} documents ready", "doc.5": "Rental contract", "doc.6": "Revenue stamp", "doc.7": "4 passport photos", "docs.open": "Open {name}",
 };
 
 const ro: Record<Key, string> = {
@@ -178,6 +180,7 @@ const ro: Record<Key, string> = {
   "onb.next": "Înainte", "onb.back": "Înapoi", "onb.skip": "Sari peste", "onb.start": "Să începem", "onb.nameLabel": "Numele tău (opțional)",
   "onb.nameNote": "Folosit doar pentru salut. Rămâne pe telefonul tău și nu este salvat sau trimis.",
   "onb.yes": "Da", "onb.no": "Nu", "onb.noSay": "Prefer să nu spun", "onb.euNote": "Regulile sunt diferite: așa îți arăt drumul potrivit.",
+  "tab.docs": "Documente", "docs.title": "Documentele tale", "docs.sub": "Tot ce ai nevoie, într-un singur loc", "docs.concept": "Machetă conceptuală", "docs.summary": "{done} din {total} gata", "docs.ready": "Gata", "docs.missing": "De adăugat", "docs.statusAdded": "Încărcat · Exemplu", "docs.add": "Adaugă document", "docs.addNote": "În demo nu se încarcă fișiere.", "docs.pino": "Pino te anunță", "docs.pinoMsg": "Îți lipsește declarația de domiciliu efectiv pentru următorul pas din traseul tău.", "docs.viewList": "Listă", "docs.viewPath": "Pe traseu", "docs.detail": "Detalii document", "docs.usedIn": "Necesar pentru acești pași", "docs.status": "Stare", "docs.expiry": "Expirare", "docs.expiryNone": "Nu este indicată (date de exemplu)", "docs.facsimile": "Specimen", "docs.openPath": "Vezi în traseu", "docs.pathCount": "{done} din {total} documente gata", "doc.5": "Contract de închiriere", "doc.6": "Timbru fiscal", "doc.7": "4 fotografii tip pașaport", "docs.open": "Deschide {name}",
 };
 
 const ar: Record<Key, string> = {
@@ -236,6 +239,7 @@ const ar: Record<Key, string> = {
   "onb.next": "التالي", "onb.back": "رجوع", "onb.skip": "تخطَّ", "onb.start": "لنبدأ", "onb.nameLabel": "اسمك (اختياري)",
   "onb.nameNote": "فقط لتحيتك. يبقى على هاتفك ولا يُحفظ ولا يُرسل.",
   "onb.yes": "نعم", "onb.no": "لا", "onb.noSay": "أفضّل عدم القول", "onb.euNote": "القواعد مختلفة: هكذا أدلّك على الطريق الصحيح.",
+  "tab.docs": "الوثائق", "docs.title": "وثائقك", "docs.sub": "كل ما تحتاجه في مكان واحد", "docs.concept": "نموذج مفاهيمي", "docs.summary": "{done} من {total} جاهزة", "docs.ready": "جاهزة", "docs.missing": "للإضافة", "docs.statusAdded": "مرفوعة · مثال", "docs.add": "أضف وثيقة", "docs.addNote": "لا يتم رفع ملفات في العرض التجريبي.", "docs.pino": "Pino ينبّهك", "docs.pinoMsg": "تنقصك وثيقة إقرار السكن الفعلي للخطوة التالية في مسارك.", "docs.viewList": "قائمة", "docs.viewPath": "حسب المسار", "docs.detail": "تفاصيل الوثيقة", "docs.usedIn": "مطلوبة لهذه الخطوات", "docs.status": "الحالة", "docs.expiry": "تاريخ الانتهاء", "docs.expiryNone": "غير مذكور (بيانات تجريبية)", "docs.facsimile": "نموذج توضيحي", "docs.openPath": "اعرض في المسار", "docs.pathCount": "{done} من {total} وثائق جاهزة", "doc.5": "عقد الإيجار", "doc.6": "طابع الرسوم", "doc.7": "4 صور شخصية", "docs.open": "افتح {name}",
 };
 
 const uk: Record<Key, string> = {
@@ -294,6 +298,7 @@ const uk: Record<Key, string> = {
   "onb.next": "Далі", "onb.back": "Назад", "onb.skip": "Пропустити", "onb.start": "Почнімо", "onb.nameLabel": "Твоє ім'я (необов'язково)",
   "onb.nameNote": "Лише щоб привітатися. Залишається на твоєму телефоні й нікуди не надсилається.",
   "onb.yes": "Так", "onb.no": "Ні", "onb.noSay": "Не хочу казати", "onb.euNote": "Правила різні: так я покажу правильний шлях.",
+  "tab.docs": "Документи", "docs.title": "Твої документи", "docs.sub": "Усе потрібне — в одному місці", "docs.concept": "Концептуальний макет", "docs.summary": "{done} з {total} готові", "docs.ready": "Готові", "docs.missing": "Треба додати", "docs.statusAdded": "Завантажено · Приклад", "docs.add": "Додати документ", "docs.addNote": "У демо файли не завантажуються.", "docs.pino": "Pino попереджає", "docs.pinoMsg": "Тобі бракує декларації про фактичне місце проживання для наступного кроку твого маршруту.", "docs.viewList": "Список", "docs.viewPath": "За маршрутом", "docs.detail": "Деталі документа", "docs.usedIn": "Потрібен для цих кроків", "docs.status": "Стан", "docs.expiry": "Термін дії", "docs.expiryNone": "Не вказано (приклад даних)", "docs.facsimile": "Зразок", "docs.openPath": "Дивись у маршруті", "docs.pathCount": "{done} з {total} документів готові", "doc.5": "Договір оренди", "doc.6": "Гербова марка", "doc.7": "4 фото на документи", "docs.open": "Відкрити {name}",
 };
 
 const fil: Record<Key, string> = {
@@ -352,6 +357,7 @@ const fil: Record<Key, string> = {
   "onb.next": "Susunod", "onb.back": "Bumalik", "onb.skip": "Laktawan", "onb.start": "Magsimula na tayo", "onb.nameLabel": "Pangalan mo (opsyonal)",
   "onb.nameNote": "Para lang batiin ka. Nananatili sa telepono mo at hindi sine-save o ipinapadala.",
   "onb.yes": "Oo", "onb.no": "Hindi", "onb.noSay": "Mas gusto kong hindi sabihin", "onb.euNote": "Iba ang mga patakaran: para maituro ko ang tamang daan.",
+  "tab.docs": "Dokumento", "docs.title": "Ang mga dokumento mo", "docs.sub": "Lahat ng kailangan mo, sa iisang lugar", "docs.concept": "Konseptong mockup", "docs.summary": "{done} sa {total} ang handa", "docs.ready": "Handa", "docs.missing": "Idadagdag", "docs.statusAdded": "Na-upload · Halimbawa", "docs.add": "Magdagdag ng dokumento", "docs.addNote": "Walang ina-upload na file sa demo.", "docs.pino": "Nagpapaalala si Pino", "docs.pinoMsg": "Kulang ka ng deklarasyon ng aktwal na tirahan para sa susunod na hakbang ng ruta mo.", "docs.viewList": "Listahan", "docs.viewPath": "Ayon sa ruta", "docs.detail": "Detalye ng dokumento", "docs.usedIn": "Kailangan sa mga hakbang na ito", "docs.status": "Katayuan", "docs.expiry": "Petsa ng pag-expire", "docs.expiryNone": "Hindi nakasaad (halimbawang datos)", "docs.facsimile": "Ispesimen", "docs.openPath": "Tingnan sa ruta", "docs.pathCount": "{done} sa {total} dokumento ang handa", "doc.5": "Kontrata sa upa", "doc.6": "Revenue stamp", "doc.7": "4 na larawang pang-ID", "docs.open": "Buksan ang {name}",
 };
 
 const bn: Record<Key, string> = {
@@ -410,6 +416,7 @@ const bn: Record<Key, string> = {
   "onb.next": "এগিয়ে যান", "onb.back": "পিছনে", "onb.skip": "বাদ দিন", "onb.start": "শুরু করি", "onb.nameLabel": "আপনার নাম (ঐচ্ছিক)",
   "onb.nameNote": "শুধু আপনাকে শুভেচ্ছা জানাতে। এটি আপনার ফোনেই থাকে, সংরক্ষণ বা পাঠানো হয় না।",
   "onb.yes": "হ্যাঁ", "onb.no": "না", "onb.noSay": "বলতে চাই না", "onb.euNote": "নিয়ম আলাদা: এভাবে আমি সঠিক পথ দেখাতে পারি।",
+  "tab.docs": "নথি", "docs.title": "আপনার নথি", "docs.sub": "যা দরকার, সব এক জায়গায়", "docs.concept": "ধারণাগত মকআপ", "docs.summary": "{done}/{total} প্রস্তুত", "docs.ready": "প্রস্তুত", "docs.missing": "যোগ করতে হবে", "docs.statusAdded": "আপলোড · উদাহরণ", "docs.add": "নথি যোগ করুন", "docs.addNote": "ডেমোতে ফাইল আপলোড হয় না।", "docs.pino": "Pino আপনাকে জানাচ্ছে", "docs.pinoMsg": "আপনার পথের পরবর্তী ধাপের জন্য প্রকৃত ঠিকানার ঘোষণা আপনার নেই।", "docs.viewList": "তালিকা", "docs.viewPath": "পথ অনুযায়ী", "docs.detail": "নথির বিবরণ", "docs.usedIn": "এই ধাপগুলোর জন্য প্রয়োজন", "docs.status": "অবস্থা", "docs.expiry": "মেয়াদ", "docs.expiryNone": "উল্লেখ নেই (উদাহরণ তথ্য)", "docs.facsimile": "নমুনা", "docs.openPath": "পথে দেখুন", "docs.pathCount": "{done}/{total} নথি প্রস্তুত", "doc.5": "ভাড়ার চুক্তি", "doc.6": "রাজস্ব স্ট্যাম্প", "doc.7": "৪টি ছবি", "docs.open": "{name} খুলুন",
 };
 
 // Automatic languages: English everywhere, except the few texts shared with the real site.

@@ -1,11 +1,11 @@
 import { useI18n } from "@/i18n/I18nProvider";
 import type { Key } from "@/i18n/dict";
 
-export type DemoAction = "welcome" | "language" | "intro" | "idle" | "listening" | "thinking" | "speaking" | "percorso" | "foglio" | "io";
+export type DemoAction = "welcome" | "language" | "intro" | "idle" | "listening" | "thinking" | "speaking" | "percorso" | "foglio" | "documenti" | "io";
 const OPTS: [DemoAction, Key][] = [
   ["welcome", "demo.welcome"], ["language", "demo.lang"], ["intro", "demo.intro"], ["idle", "demo.conv"],
   ["listening", "mic.listening"], ["thinking", "mic.thinking"], ["speaking", "mic.speaking"],
-  ["percorso", "tab.percorso"], ["foglio", "tab.foglio"], ["io", "menu.settings"],
+  ["percorso", "tab.percorso"], ["foglio", "tab.foglio"], ["documenti", "tab.docs"], ["io", "menu.settings"],
 ];
 
 type Props = { current: DemoAction; onAction: (a: DemoAction) => void };
