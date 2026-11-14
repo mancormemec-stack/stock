@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primo Passo – Pino ti guida tra le pratiche a Roma</title>
+  <meta name="description" content="Pino è un assistente a voce e in chat che guida le persone straniere a Roma tra residenza, tessera sanitaria e permesso di soggiorno, un passo alla volta e nella loro lingua.">
+  <meta property="og:title" content="Primo Passo – Il tuo primo passo a Roma, nella tua lingua">
+  <meta property="og:description" content="Pino ti guida tra residenza, tessera sanitaria e permesso di soggiorno, un passo alla volta, a voce o in chat.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://mancormemec-stack.github.io/stock/cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#173F46">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Nunito+Sans:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="pino.css">
+  <style>
+    :root {
+      --bg: #FAF9F6; --fg: #202B30; --muted: #5E6A6F; --card: #FFFFFF; --border: #ECE8E1;
+      --petrol: #173F46; --petrol-fg: #FFFFFF; --tint: #E6EEEE; --peach: #FDEBDF;
+      --primary: #F06424; --primary-text: #B8450F; --ok: #2B6B53; --ok-bg: #E3F1EB; --warn: #8A5300; --warn-bg: #FBF0DA;
+      --shadow: 0 1px 2px rgb(32 43 48 / .05), 0 8px 28px rgb(32 43 48 / .08);
+      --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+      --sans: "Nunito Sans", system-ui, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #101719; --fg: #EEF2F2; --muted: #A9B6B8; --card: #182225; --border: #26343A;
+        --petrol: #0E2A2F; --tint: #1D2C30; --peach: #2C2119; --primary-text: #FF9A62; --ok: #7FD0AE; --ok-bg: #16302A; --warn: #F2C26B; --warn-bg: #352A12;
+        --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 8px 28px rgb(0 0 0 / .35);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 400 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
+    .wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+    h1, h2, h3 { font-family: var(--display); line-height: 1.08; margin: 0; letter-spacing: -.01em; }
+    h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; color: var(--petrol); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) h2 { color: var(--fg); } }
+    h3 { font-size: 20px; font-weight: 800; }
+    p { margin: 0; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* Barra */
+    header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    .bar { display: flex; align-items: center; gap: 18px; min-height: 64px; }
+    .logo { font: 800 22px var(--display); color: var(--petrol); text-decoration: none; margin-inline-end: auto; display: flex; align-items: center; gap: 10px; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .logo { color: var(--fg); } }
+    .logo i { width: 12px; height: 12px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 4px var(--peach); }
+    nav.links { display: flex; gap: 20px; font-weight: 700; font-size: 15px; }
+    nav.links a { text-decoration: none; color: var(--muted); }
+    nav.links a:hover { color: var(--primary-text); }
+    .lang { border: 1px solid var(--border); background: var(--card); color: var(--fg); border-radius: 999px; padding: 7px 14px; font: 700 14px var(--sans); cursor: pointer; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 26px; border-radius: 999px; font: 800 17px var(--sans); text-decoration: none; transition: transform .15s, box-shadow .15s; }
+    .btn:active { transform: scale(.97); }
+    .btn.primary { background: var(--primary); color: #fff; box-shadow: var(--shadow); }
+    .btn.primary:hover { box-shadow: 0 10px 30px rgb(240 100 36 / .35); }
+    .btn.ghost { border: 2px solid var(--petrol); color: var(--petrol); background: transparent; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.ghost { border-color: var(--fg); color: var(--fg); } }
+    .btn.small { min-height: 40px; padding: 0 18px; font-size: 15px; }
+    @media (max-width: 760px) { nav.links { display: none; } }
+
+    /* Hero */
+    .hero { position: relative; overflow: hidden; padding: 56px 0 72px; background: linear-gradient(135deg, var(--peach) 0%, var(--bg) 55%, var(--tint) 100%); }
+    .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: center; }
+    @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero { padding: 36px 0 48px; } }
+    .kicker { display: inline-block; font: 800 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--primary-text); background: var(--card); padding: 6px 12px; border-radius: 999px; box-shadow: var(--shadow); }
+    .hero h1 { font-size: clamp(40px, 6.4vw, 70px); font-weight: 800; color: var(--petrol); margin: 18px 0 16px; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero h1 { color: var(--fg); } }
+    .hero h1 em { font-style: normal; position: relative; white-space: nowrap; }
+    .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 8px; border-radius: 8px; background: var(--primary); opacity: .85; transform: skewX(-12deg); }
+    .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); max-width: 34em; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 22px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+    .chips li { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 14.5px; color: var(--petrol); box-shadow: var(--shadow); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chips li { color: var(--fg); } }
+    .stage { position: relative; display: grid; justify-items: center; }
+    .bubble { position: relative; background: var(--card); border-radius: 20px; padding: 12px 18px; font-weight: 700; box-shadow: var(--shadow); min-height: 48px; max-width: 290px; text-align: center; margin-bottom: 14px; transition: opacity .2s; }
+    .bubble::after { content: ""; position: absolute; left: 50%; bottom: -8px; width: 16px; height: 16px; background: inherit; transform: translateX(-50%) rotate(45deg); border-radius: 3px; }
+    #pino .pino { height: clamp(240px, 34vw, 380px); width: auto; }
+    .metro { position: absolute; left: 0; right: 0; bottom: 6px; height: 70px; width: 100%; z-index: 0; pointer-events: none; opacity: .8; }
+    .hero > .wrap { position: relative; z-index: 1; }
+    #pino { position: relative; z-index: 1; }
+
+    /* Sezioni */
+    section.s { padding: 80px 0; }
+    section.s.alt { background: var(--card); border-block: 1px solid var(--border); }
+    .head { max-width: 40em; margin-bottom: 36px; }
+    .head p { color: var(--muted); font-size: 19px; margin-top: 12px; }
+    .grid { display: grid; gap: 18px; }
+    .g4 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .g3 { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 24px; box-shadow: var(--shadow); }
+    section.s.alt .card { background: var(--bg); box-shadow: none; }
+    .card p { color: var(--muted); margin-top: 8px; }
+    .num { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; background: var(--peach); color: var(--primary-text); font: 800 20px var(--display); margin-bottom: 14px; }
+    .paths { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .paths li { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 16px 18px; font-weight: 800; box-shadow: var(--shadow); }
+    .paths span { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; font-size: 19px; background: var(--tint); flex: none; }
+    .paths small { display: block; font-weight: 600; color: var(--muted); font-size: 14px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .badge { border-radius: 999px; padding: 5px 12px; font-weight: 800; font-size: 14px; }
+    .b-ok { background: var(--ok-bg); color: var(--ok); } .b-auto { background: var(--tint); color: var(--petrol); } .b-warn { background: var(--warn-bg); color: var(--warn); }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .b-auto { color: var(--fg); } }
+    .langs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .langs span { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-weight: 700; }
+    .tech { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 0; padding: 0; list-style: none; }
+    .tech li { background: var(--petrol); color: var(--petrol-fg); border-radius: 12px; padding: 8px 14px; font-weight: 700; font-size: 15px; }
+    .note { background: var(--warn-bg); color: var(--warn); border-radius: 18px; padding: 18px 22px; font-weight: 600; }
+    .final { text-align: center; padding: 84px 0; background: var(--petrol); color: var(--petrol-fg); }
+    .final h2 { color: #fff; }
+    .final p { color: #D5E3E4; margin: 14px auto 28px; max-width: 34em; font-size: 19px; }
+    .final .btn.ghost { border-color: #fff; color: #fff; }
+    footer { padding: 28px 0 40px; color: var(--muted); font-size: 14.5px; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+    footer a { color: var(--primary-text); font-weight: 700; }
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s, transform .5s; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; transition: none; } .btn { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="logo" href="#top"><i aria-hidden="true"></i>Primo Passo</a>
+      <nav class="links" aria-label="Sezioni" data-en-aria="Sections">
+        <a href="#come" data-en="How it works">Come funziona</a>
+        <a href="#fiducia" data-en="Trust">Fiducia</a>
+        <a href="#lingue" data-en="Languages">Lingue</a>
+        <a href="#tecnica" data-en="How it's made">Come è fatto</a>
+      </nav>
+      <button class="lang" id="lang" type="button" aria-label="Switch language / Cambia lingua">EN</button>
+      <a class="btn primary small" href="https://mancormemec-stack.github.io/primo-passo/" data-en="Try Pino">Prova Pino</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <svg class="metro" viewBox="0 0 800 90" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 55 C140 55 200 55 300 30 S520 14 800 46" fill="none" stroke="#F06424" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+        <path d="M0 76 C220 76 360 80 520 66 S720 46 800 58" fill="none" stroke="#368568" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+        <circle cx="300" cy="30" r="9" fill="#fff" stroke="#F06424" stroke-width="4"/><circle cx="520" cy="66" r="9" fill="#fff" stroke="#368568" stroke-width="4"/>
+      </svg>
+      <div class="wrap">
+        <div>
+          <span class="kicker" data-en="Your guide to paperwork in Rome">La tua guida alle pratiche a Roma</span>
+          <h1><span data-en="Your first step in Rome,">Il tuo primo passo a Roma,</span> <em data-en="in your language.">nella tua lingua.</em></h1>
+          <p class="lead" data-en="Pino guides you through residence, health card and residence-permit paperwork, one step at a time, by voice or chat.">Pino ti guida tra residenza, tessera sanitaria e permesso di soggiorno, un passo alla volta, a voce o in chat.</p>
+          <div class="cta">
+            <a class="btn primary" href="https://mancormemec-stack.github.io/primo-passo/" data-en="Talk to Pino">Parla con Pino →</a>
+            <a class="btn ghost" href="https://github.com/mancormemec-stack/primo-passo" data-en="See the code">Guarda il codice</a>
+          </div>
+          <ul class="chips">
+            <li data-en="Voice and chat">Voce e chat</li>
+            <li data-en="Interface in 89 languages">Interfaccia in 89 lingue</li>
+            <li data-en="No data saved">Nessun dato salvato</li>
+          </ul>
+        </div>
+        <div class="stage" aria-hidden="true">
+          <div class="bubble" id="bubble"></div>
+          <div id="pino"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="problema">
+      <div class="wrap head reveal">
+        <h2 data-en="The problem">Il problema</h2>
+        <p data-en="Residence, health card and residence permit depend on one another. Getting the order wrong costs weeks, and the information is scattered and written in bureaucratese. People who speak little Italian reach the wrong desk with the wrong documents.">Residenza, tessera sanitaria e permesso di soggiorno dipendono l'una dall'altra. Sbagliare l'ordine fa perdere settimane, e le informazioni sono sparse e scritte in burocratese. Chi parla poco italiano arriva allo sportello sbagliato, con i documenti sbagliati.</p>
+      </div>
+    </section>
+
+    <section class="s alt" id="come">
+      <div class="wrap">
+        <div class="head reveal"><h2 data-en="How it works">Come funziona</h2></div>
+        <div class="grid g4">
+          <article class="card reveal"><div class="num">1</div><h3 data-en="You tell Pino your situation">Racconti la tua situazione</h3><p data-en="By voice or text, in your language. Pino only asks what it needs.">A voce o per iscritto, nella tua lingua. Pino chiede solo quello che serve.</p></article>
+          <article class="card reveal"><div class="num">2</div><h3 data-en="Pino picks the path">Pino sceglie il percorso</h3><p data-en="It checks the required documents and tells you what is missing.">Controlla i documenti richiesti e ti dice cosa manca.</p></article>
+          <article class="card reveal"><div class="num">3</div><h3 data-en="One step at a time">Un passo alla volta</h3><p data-en="No skipping: steps that need documents stay locked until the mandatory ones are declared.">Niente salti: i passi con documenti obbligatori restano bloccati finché non sono dichiarati.</p></article>
+          <article class="card reveal"><div class="num">4</div><h3 data-en="Sheet for the counter">Foglio per lo sportello</h3><p data-en="A printable sheet in Italian and in your language, plus a phone reminder.">Un foglio stampabile in italiano e nella tua lingua, e un promemoria per il telefono.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="percorsi">
+      <div class="wrap">
+        <div class="head reveal"><h2 data-en="Four paths today">Quattro percorsi, oggi</h2></div>
+        <ul class="paths reveal">
+          <li><span aria-hidden="true">🏠</span><div><b data-en="Residence registration">Iscrizione anagrafica</b><small data-en="Anagrafe, Rome">Anagrafe di Roma</small></div></li>
+          <li><span aria-hidden="true">🩺</span><div><b data-en="Health service and health card">Servizio sanitario e tessera</b><small>ASL</small></div></li>
+          <li><span aria-hidden="true">🛂</span><div><b data-en="Residence-permit renewal">Rinnovo del permesso di soggiorno</b><small data-en="For employment">Per lavoro subordinato</small></div></li>
+          <li><span aria-hidden="true">🪪</span><div><b data-en="Electronic ID card">Carta d'identità elettronica</b><small data-en="Fallback path">Percorso di riserva</small></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="s alt" id="fiducia">
+      <div class="wrap">
+        <div class="head reveal"><h2 data-en="Something you can trust">Di cui ti puoi fidare</h2><p data-en="Pino only uses paths with declared sources, and tells you how reliable each piece of information is.">Pino usa solo percorsi con fonti dichiarate e ti dice quanto è sicura ogni informazione.</p></div>
+        <div class="grid g3">
+          <article class="card reveal"><h3 data-en="Every item is labelled">Ogni voce è etichettata</h3><p data-en="The sheet shows what is confirmed and what is not.">Il foglio mostra cosa è confermato e cosa no.</p>
+            <div class="badges"><span class="badge b-ok" data-en="Checked by a person">Verificato da una persona</span><span class="badge b-auto" data-en="Checked automatically">Controllato in automatico</span><span class="badge b-warn" data-en="To be confirmed">Da confermare</span></div></article>
+          <article class="card reveal"><h3 data-en="When it doesn't know, it says so">Quando non sa, lo dice</h3><p data-en="If a question falls outside its paths, Pino doesn't make things up: it points you to free help desks.">Se la domanda esce dai percorsi, Pino non inventa: indica sportelli di aiuto gratuito.</p></article>
+          <article class="card reveal"><h3 data-en="No account, no data saved">Nessun account, nessun dato salvato</h3><p data-en="Your progress stays in your browser. We don't ask for your name or your documents.">Lo stato resta nel tuo browser. Non chiediamo nome né documenti.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="s" id="lingue">
+      <div class="wrap">
+        <div class="head reveal"><h2 data-en="89 languages">89 lingue</h2>
+          <p data-en="The interface is available in 89 languages, with right-to-left writing for Arabic, Hebrew, Persian, Urdu and more. Only Italian and English are written by us: the others are automatic translations still to be reviewed by native speakers. Pino speaks the language you choose; we have tested it by voice in only a few.">L'interfaccia è disponibile in 89 lingue, con scrittura da destra a sinistra per arabo, ebraico, persiano, urdu e altre. Solo italiano e inglese sono scritti da noi: le altre sono traduzioni automatiche ancora da rivedere. Pino parla la lingua che scegli; a voce l'abbiamo provato in poche lingue.</p></div>
+        <div class="langs reveal" lang="mul">
+          <span lang="it">Italiano</span><span lang="en">English</span><span lang="ro">Română</span><span lang="ar" dir="rtl">العربية</span><span lang="uk">Українська</span><span lang="fil">Filipino</span><span lang="bn">বাংলা</span><span lang="es">Español</span><span lang="fr">Français</span><span lang="zh">中文</span><span lang="hi">हिन्दी</span><span lang="ur" dir="rtl">اردو</span><span lang="fa" dir="rtl">فارسی</span><span lang="sw">Kiswahili</span><span data-en="+ 75 more">+ 75 altre</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="s alt" id="tecnica">
+      <div class="wrap">
+        <div class="head reveal"><h2 data-en="How it's made">Come è fatto</h2>
+          <p data-en="An ElevenLabs agent with Claude as its language model. Eight tools run in the browser, so there is no backend and no key in the site. The rules (order of steps, mandatory documents, one step at a time) are enforced in code, and 137 automated tests run before every release.">Un agente ElevenLabs con Claude come modello linguistico. Otto strumenti girano nel browser: non c'è un server e nel sito non c'è nessuna chiave. Le regole (ordine dei passi, documenti obbligatori, un passo alla volta) sono fatte rispettare dal codice e 137 test automatici girano prima di ogni pubblicazione.</p></div>
+        <ul class="tech reveal"><li>ElevenLabs Agents</li><li>Claude</li><li data-en="8 browser tools">8 strumenti nel browser</li><li>JavaScript</li><li data-en="137 automated tests">137 test automatici</li><li>GitHub Pages</li><li>Claude Code</li></ul>
+      </div>
+    </section>
+
+    <section class="s" id="stato">
+      <div class="wrap reveal">
+        <p class="note" data-en="Primo Passo is a prototype built for Agentic Hack Rome. It is not an official service of the City of Rome, it does not replace the offices and it is not legal advice. Not all data has yet been checked by a person.">Primo Passo è un prototipo nato per Agentic Hack Rome. Non è un servizio ufficiale del Comune di Roma, non sostituisce gli uffici e non è consulenza legale. Non tutti i dati sono ancora controllati da una persona.</p>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap">
+        <h2 data-en="Take your first step.">Fai il tuo primo passo.</h2>
+        <p data-en="Open Pino, choose your language and ask: “How do I get my health card?”">Apri Pino, scegli la tua lingua e chiedi: «Come ottengo la tessera sanitaria?»</p>
+        <div class="cta" style="justify-content:center">
+          <a class="btn primary" href="https://mancormemec-stack.github.io/primo-passo/" data-en="Talk to Pino">Parla con Pino →</a>
+          <a class="btn ghost" href="https://github.com/mancormemec-stack/primo-passo" data-en="Repository">Repository</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span data-en="Primo Passo · open source (MIT)">Primo Passo · codice aperto (MIT)</span>
+      <span><a href="https://mancormemec-stack.github.io/primo-passo/">mancormemec-stack.github.io/primo-passo</a> · <a href="https://github.com/mancormemec-stack/primo-passo">GitHub</a></span>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { creaPino } from "./pino.js";
+
+    // --- Lingua della pagina: italiano di base, inglese a richiesta (o se il browser è in inglese) ---
+    const html = document.documentElement;
+    const els = [...document.querySelectorAll("[data-en]")];
+    els.forEach((e) => { e.dataset.it = e.textContent; });
+    const btn = document.getElementById("lang");
+    function setLang(l) {
+      html.lang = l;
+      els.forEach((e) => { e.textContent = l === "en" ? e.dataset.en : e.dataset.it; });
+      document.querySelector("nav.links").setAttribute("aria-label", l === "en" ? "Sections" : "Sezioni");
+      btn.textContent = l === "en" ? "IT" : "EN";
+      try { localStorage.setItem("pp-lang", l); } catch {}
+      frasi(); // aggiorna il fumetto
+    }
+    let l0 = new URLSearchParams(location.search).get("lang");
+    try { l0 = l0 || localStorage.getItem("pp-lang"); } catch {}
+    if (l0 !== "it" && l0 !== "en") l0 = (navigator.language || "it").toLowerCase().startsWith("it") ? "it" : "en";
+
+    // --- Pino: un giro dei cinque stati con un fumetto, solo come illustrazione ---
+    const pino = creaPino(document.getElementById("pino"));
+    const bubble = document.getElementById("bubble");
+    const SCENE = [
+      ["idle", "Ciao! Come posso aiutarti?", "Hi! How can I help?"],
+      ["listening", "Ti ascolto…", "I'm listening…"],
+      ["thinking", "Controllo i documenti…", "Checking your documents…"],
+      ["speaking", "Prima ti serve il codice fiscale.", "First you need your tax code."],
+      ["success", "Passo fatto!", "Step done!"],
+    ];
+    let i = 0;
+    const lingua = () => (html.lang === "en" ? 2 : 1);
+    function frasi() { bubble.textContent = SCENE[i][lingua()]; }
+    function scena() { pino.stato(SCENE[i][0]); frasi(); }
+    scena();
+    const ridotto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!ridotto) setInterval(() => { if (document.hidden) return; i = (i + 1) % SCENE.length; scena(); }, 2600);
+
+    btn.onclick = () => setLang(html.lang === "en" ? "it" : "en");
+    setLang(l0);
+
+    // --- Comparsa delle sezioni allo scorrimento (senza, tutto è già visibile) ---
+    const rev = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window && !ridotto) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+      rev.forEach((r) => io.observe(r));
+    } else rev.forEach((r) => r.classList.add("in"));
+  </script>
+  <noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+</body>
+</html>

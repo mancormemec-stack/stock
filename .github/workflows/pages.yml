@@ -1,3 +1,5 @@
+# Landing page statica di Primo Passo: nessuna compilazione, si pubblica la cartella site/ così com'è.
+# (La demo dell'interfaccia in React è conservata nel ramo demo-lovable e nel tag demo-lovable-v1.)
 name: Pubblica su GitHub Pages
 
 on:
@@ -15,38 +17,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-      - name: Prepara il sito statico
-        run: |
-          test -f .output/public/index.html
-          cp .output/public/index.html .output/public/404.html
-          rm -f .output/public/_headers
-          touch .output/public/.nojekyll
-      - name: Controllo chiavi e credenziali nel sito
-        run: |
-          if grep -rIEn "(sk-[A-Za-z0-9]{20,}|sk_live_[A-Za-z0-9]+|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AIza[0-9A-Za-z_-]{30,}|xox[baprs]-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)" .output/public; then
-            echo "Trovata una possibile chiave nella build: non pubblico."
-            exit 1
-          fi
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .output/public
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+      - name: Prepara la cartella da pubblicare (solo la pagina e i suoi file)
+        run: |
+          mkdir -p _site
+          cp index.html pino.js pino.css favicon.svg cover.jpg _site/
+          touch _site/.nojekyll
+      - name: Controllo chiavi e credenziali
+        run: |
+          if grep -rIEn "(sk-[A-Za-z0-9]{20,}|sk_live_[A-Za-z0-9]+|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AIza[0-9A-Za-z_-]{30,}|xox[baprs]-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)" _site; then
+            echo "Trovata una possibile chiave: non pubblico."
+            exit 1
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
