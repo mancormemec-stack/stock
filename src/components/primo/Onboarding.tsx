@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Check, ArrowRight, ArrowLeft } from "lucide-react";
+import { Check, ArrowRight, ArrowLeft, Search, Volume2 } from "lucide-react";
 import { LANGUAGES } from "./types";
 import { AUTO_LANGS } from "@/i18n/auto-langs";
 import { AutoNote } from "./AutoNote";
 import { Pino } from "./Pino";
 import { RomeScene } from "./RomeScene";
 import { LangMark } from "./Flags";
+import { useSpeech } from "./useSpeech";
 import { useI18n } from "@/i18n/I18nProvider";
 
 export type OnboardingResult = { language: string; firstName: string; isEuCitizen: boolean | null };
@@ -16,6 +17,16 @@ type Props = {
 
 const HELLOS = ["Ciao!", "Hello!", "Bună!", "مرحبا!", "Привіт!", "Kumusta!"];
 const ONB_LANGS = LANGUAGES.filter((l) => l.code !== "bn");
+const CORE_EN: Record<string, string> = { it: "Italian", en: "English", ro: "Romanian", ar: "Arabic", uk: "Ukrainian", fil: "Filipino", bn: "Bengali" };
+type Row = { code: string; label: string; english: string; dir: "ltr" | "rtl" };
+/** Languages shown in the scrolling list: Bengali (written for the demo) + the 82 automatic ones. */
+const OTHER_LANGS: Row[] = [
+  ...LANGUAGES.filter((l) => l.code === "bn").map((l) => ({ code: l.code, label: l.label, english: CORE_EN[l.code] ?? l.code, dir: l.dir })),
+  ...AUTO_LANGS,
+];
+const norm = (x: string) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const matches = (l: Row, q: string) => !q || norm(`${l.label} ${l.english} ${l.code}`).includes(q);
+const AUTO_CODES = new Set(AUTO_LANGS.map((l) => l.code));
 const reduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function Title() {
@@ -46,6 +57,9 @@ export function Onboarding({ language, onLanguageChange, onComplete, initialStep
   const [hop, setHop] = useState(0);
   const [hello, setHello] = useState(0);
   const [typed, setTyped] = useState(0);
+  const [query, setQuery] = useState("");
+  const [run, setRun] = useState(0);
+  const voice = useSpeech();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const intro = t("pino.intro");
 
@@ -56,16 +70,21 @@ export function Onboarding({ language, onLanguageChange, onComplete, initialStep
     return () => clearInterval(id);
   }, [step]);
   useEffect(() => {
-    if (step !== 2) return;
+    if (step !== 2) { voice.stop(); return; }
+    // Pino really speaks (browser voice for the chosen language; the 82 automatic languages have an English intro).
+    voice.speak(intro, AUTO_CODES.has(language) ? "en" : language);
     if (reduced()) { setTyped(intro.length); return; }
     setTyped(0);
-    const id = setInterval(() => setTyped((n) => { if (n >= intro.length) { clearInterval(id); return n; } return n + 1; }), 40);
+    const id = setInterval(() => setTyped((n) => { if (n >= intro.length) { clearInterval(id); return n; } return n + 1; }), 55);
     return () => clearInterval(id);
-  }, [step, intro]);
+  }, [step, intro, run]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const q = norm(query.trim());
+  const shownRows: Row[] = q ? [...ONB_LANGS.map((l) => ({ code: l.code, label: l.label, english: CORE_EN[l.code] ?? l.code, dir: l.dir })), ...OTHER_LANGS].filter((l) => matches(l, q)) : OTHER_LANGS;
+  const pick = (code: string) => { onLanguageChange(code); setPicked(true); setHop((h) => h + 1); };
   const go = (n: number) => { setDirAnim(n > step ? "next" : "prev"); setStep(n); };
   const finish = () => onComplete({ language, firstName: "", isEuCitizen: null });
-  const talking = step === 2 && typed < intro.length;
+  const talking = step === 2 && (typed < intro.length || voice.speaking);
   const disabled = step === 1 && !picked;
   const cta = step === 0 ? t("onb.begin") : step === 1 ? t("onb.next") : t("onb.continue");
 
@@ -90,35 +109,52 @@ export function Onboarding({ language, onLanguageChange, onComplete, initialStep
                 <h1 ref={titleRef} tabIndex={-1} className="outline-none relative font-display text-[18px] font-bold leading-snug">{t("onb.t1")}</h1>
               </div>
             </div>
-            <div role="radiogroup" aria-label={t("onb.t1")} className="grid grid-cols-2 gap-2.5">
-              {ONB_LANGS.map((l, i) => {
+            <div className="relative">
+              <Search aria-hidden className="pointer-events-none absolute start-3.5 top-1/2 size-[18px] -translate-y-1/2 text-muted-foreground" />
+              <input id="cerca-lingua" type="search" value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off"
+                placeholder={t("onb.search")} aria-label={t("onb.search")}
+                className="h-[48px] w-full rounded-[14px] border-2 border-transparent bg-card ps-10 pe-3 text-[15px] font-semibold shadow-card outline-none placeholder:font-medium placeholder:text-muted-foreground focus-visible:border-primary" />
+            </div>
+            {!q && (
+              <div role="radiogroup" aria-label={t("onb.t1")} className="grid grid-cols-2 gap-2.5">
+                {ONB_LANGS.map((l, i) => {
+                  const sel = picked && l.code === language;
+                  return (
+                    <button key={l.code} type="button" role="radio" aria-checked={sel} lang={l.code}
+                      onClick={() => pick(l.code)} style={{ ["--i" as string]: i }}
+                      className={`rise press relative flex min-h-[56px] items-center gap-2.5 rounded-[16px] border-2 px-3 py-2 text-[16px] font-bold shadow-card transition-colors duration-200 ${sel ? "tile-pop border-primary bg-peach" : "border-transparent bg-card"}`}>
+                      <LangMark code={l.code} />
+                      <span dir={l.dir} className="min-w-0 flex-1 text-left">{l.label}</span>
+                      {sel && <span aria-hidden className="pop grid size-[22px] shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><Check className="size-3.5" strokeWidth={3} /></span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            <div role="radiogroup" aria-label={t("onb.search")} className="max-h-[230px] overflow-y-auto overscroll-contain rounded-[16px] bg-card shadow-card">
+              {shownRows.map((l) => {
                 const sel = picked && l.code === language;
                 return (
-                  <button key={l.code} type="button" role="radio" aria-checked={sel} lang={l.code} dir={l.dir}
-                    onClick={() => { onLanguageChange(l.code); setPicked(true); setHop((h) => h + 1); }} style={{ ["--i" as string]: i }}
-                    className={`rise press relative flex min-h-[60px] items-center gap-2 rounded-[16px] border-2 px-3 py-2 text-start text-[16px] font-bold shadow-card transition-colors duration-200 ${sel ? "tile-pop border-primary bg-peach" : "border-transparent bg-card"}`}>
+                  <button key={l.code} type="button" role="radio" aria-checked={sel} lang={l.code} onClick={() => pick(l.code)}
+                    className={`press flex min-h-[48px] w-full items-center gap-3 border-b border-border px-3 py-2 text-[15px] font-semibold last:border-b-0 ${sel ? "bg-peach" : ""}`}>
                     <LangMark code={l.code} />
-                    <span className="min-w-0 flex-1">{l.label}</span>
-                    {sel && <span aria-hidden className="pop grid size-[22px] shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><Check className="size-3.5" strokeWidth={3} /></span>}
+                    <span dir={l.dir} className="min-w-0 flex-1 text-left">{l.label}{l.english !== l.label && <small className="ms-2 text-[12px] font-medium text-muted-foreground" dir="ltr">{l.english}</small>}</span>
+                    {sel && <span aria-hidden className="grid size-[20px] shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><Check className="size-3" strokeWidth={3} /></span>}
                   </button>
                 );
               })}
+              {shownRows.length === 0 && <p role="status" className="px-3 py-4 text-center text-[14px] text-muted-foreground">{t("onb.noResults")}</p>}
             </div>
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="altre-lingue" className="sr-only">{t("io.chooseLang")}</label>
-              <select id="altre-lingue" value={AUTO_LANGS.some((l) => l.code === language) ? language : ""}
-                onChange={(e) => { if (!e.target.value) return; onLanguageChange(e.target.value); setPicked(true); setHop((h) => h + 1); }}
-                className="h-[48px] rounded-[14px] border-2 border-transparent bg-card px-3 text-[15px] font-semibold shadow-card">
-                <option value="">+ 82 · Auto / Partial</option>
-                {AUTO_LANGS.map((l) => <option key={l.code} value={l.code} lang={l.code} dir={l.dir}>{l.label}</option>)}
-              </select>
-              <AutoNote />
-            </div>
+            <AutoNote />
           </>)}
           {step === 2 && (<>
             <div className="rise text-center"><Title /></div>
             <div className="mt-2">
               <Bubble>
+                <button type="button" onClick={() => setRun((n) => n + 1)} aria-label={t("onb.replay")}
+                  className="press absolute -end-2 -top-2 grid size-[36px] place-items-center rounded-full bg-primary text-primary-foreground shadow-card">
+                  <Volume2 className="size-[18px]" aria-hidden />
+                </button>
                 <h1 ref={titleRef} tabIndex={-1} className="outline-none font-sans text-[17px] font-semibold">
                   <span className="sr-only">{intro}</span>
                   <span aria-hidden>{intro.slice(0, typed)}{talking && <span className="caret">|</span>}</span>

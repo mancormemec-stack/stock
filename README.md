@@ -16,6 +16,12 @@ lingua, conversazione, percorso a fermate e foglio da portare allo sportello.
   Lo stato resta nella memoria del browser e sparisce ricaricando la pagina.
 - Le traduzioni dell'interfaccia in it, en, ro, ar, uk, fil e bn sono state scritte per la demo e vanno
   riviste da madrelingua.
+- Nell'onboarding la lingua si sceglie con la ricerca sotto Pino (nome nella lingua, in inglese o codice) e ogni
+  lingua ha la sua bandiera (libreria `flag-icons`, MIT). La bandiera è solo un'indicazione: le lingue non sono
+  paesi (l'arabo usa la bandiera della Lega Araba, catalano e galiziano le bandiere regionali).
+- Nella presentazione Pino **parla davvero** con la sintesi vocale del browser (nulla viene inviato a servizi
+  esterni). Se il dispositivo non ha una voce per la lingua scelta, Pino non parla e il testo resta scritto;
+  le 82 lingue automatiche hanno la presentazione in inglese. Il pulsante con l'altoparlante la riascolta.
 - La scheda **Documenti** è un **mockup concettuale** con documenti inventati: archivio, dettaglio di un documento
   e collegamento tra documenti e passi del percorso. Non carica file, non salva nulla, non riconosce documenti e non
   ha un backend: ogni schermata lo dichiara («Mockup concettuale · Dati di esempio»). Non è una funzione del sito vero.
