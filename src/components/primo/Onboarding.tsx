@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, ArrowRight, ArrowLeft } from "lucide-react";
 import { LANGUAGES } from "./types";
+import { AUTO_LANGS } from "@/i18n/auto-langs";
+import { AutoNote } from "./AutoNote";
 import { Pino } from "./Pino";
 import { RomeScene } from "./RomeScene";
 import { LangMark } from "./Flags";
@@ -101,6 +103,16 @@ export function Onboarding({ language, onLanguageChange, onComplete, initialStep
                   </button>
                 );
               })}
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="altre-lingue" className="sr-only">{t("io.chooseLang")}</label>
+              <select id="altre-lingue" value={AUTO_LANGS.some((l) => l.code === language) ? language : ""}
+                onChange={(e) => { if (!e.target.value) return; onLanguageChange(e.target.value); setPicked(true); setHop((h) => h + 1); }}
+                className="h-[48px] rounded-[14px] border-2 border-transparent bg-card px-3 text-[15px] font-semibold shadow-card">
+                <option value="">+ 82 · Auto / Partial</option>
+                {AUTO_LANGS.map((l) => <option key={l.code} value={l.code} lang={l.code} dir={l.dir}>{l.label}</option>)}
+              </select>
+              <AutoNote />
             </div>
           </>)}
           {step === 2 && (<>

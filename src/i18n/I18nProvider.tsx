@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { DICT, type Key, type Lang } from "./dict";
-import { LANGUAGES } from "@/components/primo/types";
+import { ALL_LANGUAGES } from "@/components/primo/types";
 
 type Ctx = { lang: Lang; dir: "ltr" | "rtl"; setLang: (l: string) => void; t: (k: Key, p?: Record<string, string | number>) => string };
 const I18nCtx = createContext<Ctx | null>(null);
@@ -15,11 +15,11 @@ export function withFade(update: () => void) {
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("it");
-  const dir = LANGUAGES.find((l) => l.code === lang)?.dir ?? "ltr";
+  const dir = ALL_LANGUAGES.find((l) => l.code === lang)?.dir ?? "ltr";
   const setLang = useCallback((l: string) => { if (l in DICT) withFade(() => setLangState(l as Lang)); }, []);
   useEffect(() => { document.documentElement.dir = dir; document.documentElement.lang = lang; }, [dir, lang]);
   const t = useCallback((k: Key, p?: Record<string, string | number>) => {
-    let s = DICT[lang][k] ?? DICT.it[k] ?? k;
+    let s = DICT[lang]?.[k] ?? DICT.it[k] ?? k;
     if (p) for (const [a, b] of Object.entries(p)) s = s.replace(`{${a}}`, String(b));
     return s;
   }, [lang]);

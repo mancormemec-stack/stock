@@ -1,4 +1,5 @@
 import type { Key } from "@/i18n/dict";
+import { AUTO_LANGS } from "@/i18n/auto-langs";
 
 export type MicState = "idle" | "listening" | "thinking" | "speaking";
 export type ToolCall = { id: string; labelKey: Key; doneKey: Key; status: "running" | "done" };
@@ -23,3 +24,6 @@ export const LANGUAGES: Language[] = [
   { code: "fil", label: "Filipino", dir: "ltr" },
   { code: "bn", label: "বাংলা", dir: "ltr" },
 ];
+
+/** All 89 selectable languages: the 7 above are written for the demo, the rest are automatic and partial. */
+export const ALL_LANGUAGES: Language[] = [...LANGUAGES, ...AUTO_LANGS];

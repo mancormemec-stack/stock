@@ -1,6 +1,9 @@
 // Central UI dictionary. Translations were written for the demo and MUST be reviewed by native speakers.
 // Proper names (Anagrafe, ASL Roma 2, Questura) stay as they are.
-export type Lang = "it" | "en" | "ro" | "ar" | "uk" | "fil" | "bn";
+import { AUTO_OVERRIDES } from "./auto-langs";
+
+/** 7 languages written for the demo + 82 automatic partial ones (see auto-langs.ts). */
+export type Lang = string;
 
 const it = {
   "conv.simplify": "Non ho capito",
@@ -409,4 +412,8 @@ const bn: Record<Key, string> = {
   "onb.yes": "হ্যাঁ", "onb.no": "না", "onb.noSay": "বলতে চাই না", "onb.euNote": "নিয়ম আলাদা: এভাবে আমি সঠিক পথ দেখাতে পারি।",
 };
 
-export const DICT: Record<Lang, Record<Key, string>> = { it, en, ro, ar, uk, fil, bn };
+// Automatic languages: English everywhere, except the few texts shared with the real site.
+const AUTO_DICT: Record<string, Record<Key, string>> = Object.fromEntries(
+  Object.entries(AUTO_OVERRIDES).map(([code, o]) => [code, { ...en, ...o } as Record<Key, string>]),
+);
+export const DICT: Record<Lang, Record<Key, string>> & { it: Record<Key, string> } = { ...AUTO_DICT, it, en, ro, ar, uk, fil, bn };

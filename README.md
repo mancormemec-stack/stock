@@ -14,8 +14,13 @@ lingua, conversazione, percorso a fermate e foglio da portare allo sportello.
   `primo-passo`.
 - Non salva nulla, non ha account, non chiama nessuna API e non contiene chiavi o credenziali.
   Lo stato resta nella memoria del browser e sparisce ricaricando la pagina.
-- Le traduzioni dell'interfaccia (it, en, ro, ar, uk, fil, bn) sono state scritte per la demo e vanno
+- Le traduzioni dell'interfaccia in it, en, ro, ar, uk, fil e bn sono state scritte per la demo e vanno
   riviste da madrelingua.
+- Altre **82 lingue** (89 in tutto, come il sito vero) sono selezionabili, ma sono traduzioni **automatiche e
+  parziali**: hanno solo i 14 testi che coincidono con quelli del sito (domanda sulla lingua, «Avanti», «Fine»,
+  microfono, conversazione, titolo del foglio…); il resto, compresi i contenuti di esempio, resta in inglese.
+  Non sono riviste da madrelingua e la pagina lo dichiara nella lingua scelta. Non vanno presentate come
+  lingue «provate». Dati: `src/i18n/auto-langs.ts`, generato da `web/i18n-auto.js` del repository principale.
 
 ## Come è pubblicata
 

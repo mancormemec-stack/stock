@@ -1,6 +1,7 @@
 import { RotateCcw, Info, ChevronRight } from "lucide-react";
 import { LanguageSelect } from "./LanguageSelect";
 import { ThemeToggle } from "./ThemeToggle";
+import { AutoNote } from "./AutoNote";
 import { useI18n } from "@/i18n/I18nProvider";
 
 type Props = { language: string; theme: "dark" | "light"; onLanguageChange: (c: string) => void; onToggleTheme: () => void; onRestart: () => void };
@@ -26,7 +27,7 @@ export function MeScreen({ language, theme, onLanguageChange, onToggleTheme, onR
       </div>
       <div className="rise flex gap-2.5 rounded-[16px] bg-petrol-tint p-3 text-[13px] text-petrol dark:text-secondary-foreground" style={{ ["--i" as string]: 1 }}>
         <Info className="mt-0.5 size-[18px] shrink-0" aria-hidden />
-        <div className="space-y-1"><p>{t("privacy")}</p><p className="font-bold">{t("sample")}</p></div>
+        <div className="space-y-1"><p>{t("privacy")}</p><p className="font-bold">{t("sample")}</p><AutoNote /></div>
       </div>
     </div>
   );
